@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0f0d">
+  <title>Monetra — Money Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#dashboard">
+      <span class="brand-icon">M</span>
+      <span>monetra<span class="brand-dot">.</span></span>
+    </a>
+
+    <p class="nav-label">MENU UTAMA</p>
+    <a class="nav-item active" href="#dashboard">▦ <span>Dashboard</span></a>
+    <a class="nav-item" href="#transactions">↔ <span>Transaksi</span></a>
+    <a class="nav-item" href="#analytics">▥ <span>Analisis</span></a>
+    <a class="nav-item" href="#savings">◎ <span>Target tabungan</span></a>
+
+    <div class="sidebar-bottom">
+      <div class="secure-icon">✓</div>
+      <strong>Data pribadi lu</strong>
+      <p>Disimpan lokal di browser ini. Tanpa akun.</p>
+      <span class="local-status"><i></i> Penyimpanan lokal aktif</span>
+    </div>
+  </aside>
+
+  <main class="main-content" id="dashboard">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">KEUANGAN PRIBADI</p>
+        <h1>Dashboard</h1>
+        <p class="subtitle">Pantau uang lu, kendalikan tujuan lu.</p>
+      </div>
+      <div class="topbar-date">
+        <span class="live-dot"></span>
+        <span id="todayLabel">Hari ini</span>
+      </div>
+    </header>
+
+    <section class="welcome-banner">
+      <div>
+        <p class="eyebrow">RINGKASAN KEUANGAN</p>
+        <h2>Uang lu, kendali lu.</h2>
+        <p>Langkah kecil hari ini, kondisi keuangan lebih baik nanti.</p>
+      </div>
+      <div class="banner-symbol">↗</div>
+    </section>
+
+    <section class="summary-grid">
+      <article class="summary-card balance-card">
+        <div class="card-top">
+          <span>Total saldo</span>
+          <span class="card-icon">◈</span>
+        </div>
+        <h2 id="totalBalance">Rp0</h2>
+        <p class="card-foot">Seluruh transaksi tercatat</p>
+      </article>
+
+      <article class="summary-card">
+        <div class="card-top">
+          <span>Pemasukan bulan ini</span>
+          <span class="card-icon green">↙</span>
+        </div>
+        <h2 id="totalIncome">Rp0</h2>
+        <p class="card-foot">Uang masuk bulan ini</p>
+      </article>
+
+      <article class="summary-card">
+        <div class="card-top">
+          <span>Pengeluaran bulan ini</span>
+          <span class="card-icon red">↗</span>
+        </div>
+        <h2 id="totalExpense">Rp0</h2>
+        <p class="card-foot">Uang keluar bulan ini</p>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel transaction-panel" id="transactions">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CATATAN UANG</p>
+            <h2>Tambah transaksi</h2>
+          </div>
+          <span class="panel-icon">＋</span>
+        </div>
+
+        <form id="transactionForm">
+          <label for="description">Nama transaksi</label>
+          <input id="description" type="text"
+            placeholder="Contoh: Makan siang" maxlength="80" required>
+
+          <div class="form-row">
+            <div>
+              <label for="type">Jenis transaksi</label>
+              <select id="type">
+                <option value="expense">Pengeluaran</option>
+                <option value="income">Pemasukan</option>
+              </select>
+            </div>
+            <div>
+              <label for="amount">Nominal (Rp)</label>
+              <input id="amount" type="number" min="1" step="1"
+                placeholder="25000" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="category">Kategori</label>
+              <select id="category">
+                <option value="Makanan">Makanan</option>
+                <option value="Transportasi">Transportasi</option>
+                <option value="Belanja">Belanja</option>
+                <option value="Pendidikan">Pendidikan</option>
+                <option value="Tagihan">Tagihan</option>
+                <option value="Hiburan">Hiburan</option>
+                <option value="Gaji">Gaji</option>
+                <option value="Hadiah">Hadiah</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+            <div>
+              <label for="date">Tanggal</label>
+              <input id="date" type="date" required>
+            </div>
+          </div>
+
+          <button class="primary-button" type="submit">
+            <span>＋</span> Simpan transaksi
+          </button>
+          <p class="form-note" id="formMessage" aria-live="polite">
+            Isi detail transaksi dengan benar.
+          </p>
+        </form>
+      </article>
+
+      <article class="panel chart-panel" id="analytics">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ARUS KAS</p>
+            <h2>Ringkasan 6 bulan</h2>
+          </div>
+          <span class="chart-legend"><i></i> Masuk <i></i> Keluar</span>
+        </div>
+        <div class="chart" id="monthlyChart"></div>
+        <div class="chart-caption">
+          <span>Perbandingan pemasukan dan pengeluaran</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel history-panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">RIWAYAT KEUANGAN</p>
+          <h2>Transaksi terbaru</h2>
+        </div>
+        <span class="count-badge" id="transactionCount">0 transaksi</span>
+      </div>
+
+      <!-- BACKUP DAN RESTORE -->
+      <div class="backup-actions">
+        <button type="button" class="secondary-button" id="exportData">
+          ↓ Export Backup
+        </button>
+
+        <label class="secondary-button import-button" for="importFile">
+          ↑ Import Backup
+        </label>
+
+        <input
+          type="file"
+          id="importFile"
+          accept=".json,application/json"
+          hidden
+        >
+      </div>
+
+      <p class="form-note" id="backupMessage" aria-live="polite">
+        Simpan salinan data secara berkala.
+      </p>
+
+      <div class="filter-row">
+        <input id="searchInput" type="search"
+          placeholder="Cari transaksi..." aria-label="Cari transaksi">
+
+        <select id="filterType" aria-label="Filter jenis transaksi">
+          <option value="all">Semua transaksi</option>
+          <option value="income">Pemasukan</option>
+          <option value="expense">Pengeluaran</option>
+        </select>
+      </div>
+
+      <div class="transaction-list" id="transactionList"></div>
+    </section>
+
+    <section class="panel savings-panel" id="savings">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">LANGKAH MENUJU TUJUAN</p>
+          <h2>Target tabungan</h2>
+        </div>
+        <span class="panel-icon">◎</span>
+      </div>
+
+      <form id="savingsForm" class="savings-form">
+        <div>
+          <label for="goalName">Nama target</label>
+          <input id="goalName" type="text" maxlength="60"
+            placeholder="Contoh: Beli laptop" required>
+        </div>
+
+        <div>
+          <label for="goalAmount">Target (Rp)</label>
+          <input id="goalAmount" type="number" min="1" step="1"
+            placeholder="3000000" required>
+        </div>
+
+        <div>
+          <label for="savedAmount">Sudah terkumpul (Rp)</label>
+          <input id="savedAmount" type="number" min="0" step="1"
+            value="0" required>
+        </div>
+
+        <button class="primary-button" type="submit">
+          Simpan target
+        </button>
+      </form>
+
+      <div id="savingsDisplay"></div>
+    </section>
+
+    <footer>
+      <span>monetra<span class="brand-dot">.</span></span>
+      <span>Kelola uang dengan lebih sadar.</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
